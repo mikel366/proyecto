@@ -22,15 +22,11 @@ class CreatePedidoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
             'locacion_id' => 'required|exists:locacions,id',
             'metodo_pago_id' => 'required|exists:metodo_pagos,id',
-            'estado_id' => 'required|exists:estado_pedidos,id',
-            'canal_venta_id' => 'required|exists:canal_ventas,id',
-            'caja_id' => 'nullable|exists:cajas,id',
-            'detalles' => 'required|array|min:1',
-            'detalles.*.producto_id' => 'required|exists:productos,id',
-            'detalles.*.cantidad' => 'required|integer|min:1',
+            'productos' => 'required|array|min:1',
+            'productos.*.producto_id' => 'required|exists:productos,id',
+            'productos.*.cantidad' => 'required|integer|min:1',
         ];
     }
 }

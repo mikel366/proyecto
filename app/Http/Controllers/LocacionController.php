@@ -2,67 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LocacionRequest;
+use App\Http\Requests\Locacion\LocacionRequest;
 use App\Http\Resources\LocacionResources;
 use App\Http\Utilitis\RespuestasApi;
 use App\Models\Locacion;
+use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class LocacionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    
+
+    public function cargarLocacion(LocacionRequest $request): JsonResponse
     {
-        $locaciones = (Locacion::all()->isEmpty()) ? 'Tabla vacia' : LocacionResources::collection(Locacion::all());
-
-        return RespuestasApi::success($locaciones, 'Listado de Locaciones');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(LocacionRequest $request): JsonResponse
-    {
-        $validated = $request->validated();
-
-        $locacion = Locacion::create($validated);
-
-        return RespuestasApi::success(new LocacionResources($locacion), 'Locacion created successfully');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id): JsonResponse
-    {
-        $locacion = Locacion::findOrFail($id);
-
-        return RespuestasApi::success(new LocacionResources($locacion));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(LocacionRequest $request, string $id): JsonResponse
-    {
-        $validated = $request->validated();
-
-        $locacion = Locacion::findOrFail($id);
-
-        $locacion->update($validated);
-
-        return RespuestasApi::success(new LocacionResources($locacion), 'Locacion updated successfully');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id): JsonResponse
-    {
-        $locacion = Locacion::findOrFail($id);
-        $locacion->delete();
-        return RespuestasApi::success(null, 'Locacion deleted successfully');
+        try{
+            $validated = $request->validated();
+            if($validated['is_default']){
+                $locacion= Locacion::create($validated);
+                $user = Auth::user();
+                $user->default_location_id = $locacion->id;
+                $user->save();
+                return RespuestasApi::success(new LocacionResources($locacion), 'Locación guardada con éxito');
+            }else{
+                $validated = $request->validated();
+                $locacion= Locacion::create([
+                    'calle' => $validated['calle'],
+                    'numero' => $validated['numero'],
+                    'referencia' => $validated['referencia'],
+                    'barrio' => $validated['barrio'],
+                    'altitud' => $validated['altitud'],
+                    'longitud' => $validated['longitud'],
+                ]);
+                return RespuestasApi::success(new LocacionResources($locacion), 'Locación guardada con éxito');
+            }
+            
+        }catch (\Exception $e){
+            return RespuestasApi::error($e->getMessage());
+        }
     }
 }

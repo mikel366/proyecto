@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone', 20)->nullable();
             $table->unsignedBigInteger('default_location_id')->nullable();
-            $table->foreign('default_location_id')->references('id')->on('locacions')->onDelete('set null');
+            $table->foreign('default_location_id')->references('id')->on('locaciones')->onDelete('set null');
             $table->unsignedBigInteger('role_id')->nullable();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
             $table->rememberToken();

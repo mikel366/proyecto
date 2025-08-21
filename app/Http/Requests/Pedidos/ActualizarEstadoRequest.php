@@ -4,7 +4,7 @@ namespace App\Http\Requests\Pedidos;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePedidoRequest extends FormRequest
+class ActualizarEstadoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class UpdatePedidoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
+            'estado_id' => 'required|integer|exists:estado_pedidos,id',
         ];
     }
 }

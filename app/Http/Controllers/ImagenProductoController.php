@@ -19,15 +19,15 @@ class ImagenProductoController extends Controller
     public function index(): JsonResponse
     {
         $imagenes = ImagenProducto::with('producto')->paginate(10);
-        return RespuestasApi::success('Listado de imágenes de productos', ImagenProductoResource::collection($imagenes));
+        return RespuestasApi::success(ImagenProductoResource::collection($imagenes), 'Listado de imágenes de productos', );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateImagenProductoRequest $request, string $producto_id): JsonResponse
+    public function store(CreateImagenProductoRequest $request): JsonResponse
     {
-        $producto = Producto::findOrFail($producto_id);
+        $producto = Producto::findOrFail($request->producto_id);
 
         foreach($request->file('images') as $imagen) {
             $ruta = $imagen->store('productos', 'public');

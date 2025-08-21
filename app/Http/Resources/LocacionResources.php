@@ -14,6 +14,15 @@ class LocacionResources extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'calle' => $this->calle,
+            'numero' => $this->numero,
+            'barrio' => $this->barrio,
+            'referencia' => $this->referencia,
+            'altitud' => $this->altitud,
+            'longitud' => $this->longitud,
+            'is_default' => $this->is_default
+        ];
     }
 }

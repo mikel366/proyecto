@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Locacion;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,10 +22,13 @@ class LocacionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'calle' => 'required|string|max:100',
-            'numero' => 'required|string|max:20',
-            'barrio' => 'required|string|max:100',
-            'referencia' => 'nullable|string',
+            'calle' => 'required|string',
+            'numero' => 'required|string',
+            'referencia' => 'required|string',
+            'barrio' => 'required|string',
+            'altitud' => 'required|string',
+            'longitud' => 'required|string',
+            'is_default' => 'required|boolean',
         ];
     }
 }

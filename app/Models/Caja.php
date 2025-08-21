@@ -26,7 +26,7 @@ class Caja extends Model
     //relaciones
     public function usuario(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function pedidos(): HasMany
@@ -36,7 +36,7 @@ class Caja extends Model
 
     public function estado(): BelongsTo
     {
-        return $this->belongsTo(EstadoCaja::class);
+        return $this->belongsTo(EstadoCaja::class, 'estado_caja_id');
     }
 
     public function movimientos(): HasMany

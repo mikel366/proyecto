@@ -22,6 +22,7 @@ class CreateImagenProductoRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'producto_id' => 'required|exists:productos,id',
             'images' => 'required|array|min:1',
             'images.*' => 'required|image|mimes:jpeg,png,jpg,webp,svg|max:2048',
         ];

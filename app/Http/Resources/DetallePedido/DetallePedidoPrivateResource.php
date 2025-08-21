@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\DetallePedido;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class DetallePedidoPrivateResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,10 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'role' => $this->role->name,
-            'default_location_id' => new LocacionResources($this->defaultLocation),
+            'pedido_id' => $this->pedido->id,
+            'producto' => $this->producto->nombre,
+            'cantidad' => $this->cantidad,
+            'precio_unitario' => $this->producto->precio,
         ];
     }
 }

@@ -20,14 +20,18 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+
+    public const ROLE_ADMIN = 1;
+    public const ROLE_CLIENT = 2;
+    public const ROLE_DELIVERY = 3;
+    
     protected $fillable = [
         'name',
         'email',
         'phone',
         'role_id',
-        'default_location_id',
         'password',
-   
     ];
 
     /**
@@ -80,4 +84,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(MovimientoCaja::class);
     }
+
 }

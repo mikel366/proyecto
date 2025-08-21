@@ -31,8 +31,6 @@ return new class extends Migration
             $table->enum('tipo', ['ingreso', 'egreso'])->nullable(false);
             $table->decimal('monto', 10, 2)->nullable(false);
             $table->string('motivo', 255)->nullable(false);
-            $table->unsignedBigInteger('referencia_id')->nullable();
-            $table->string('referencia_tipo', 100)->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

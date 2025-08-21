@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('locacions', function (Blueprint $table) {
+        Schema::create('locaciones', function (Blueprint $table) {
             $table->id();
             /*
             calle	VARCHAR(100)	NOT NULL
@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('numero', 20)->nullable(false);
             $table->string('barrio', 100)->nullable(false);
             $table->text('referencia')->nullable();
+            $table->string('altitud', 20)->nullable(false);
+            $table->string('longitud', 20)->nullable(false);
 
 
             $table->timestamps();
@@ -34,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('locacions');
+        Schema::dropIfExists('locaciones');
     }
 };
